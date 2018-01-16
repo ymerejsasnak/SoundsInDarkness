@@ -10,10 +10,11 @@ final int RADIUS_SCALING = 10;
 
 
 import beads.*;
+import java.io.File;
 
 
 MouseLight mouseLight;
-
+Audio audio;
 
 void setup() {
   size(1000, 800); 
@@ -21,6 +22,7 @@ void setup() {
   ellipseMode(CENTER);
 
   mouseLight = new MouseLight();
+  audio = new Audio();
 }
 
 
