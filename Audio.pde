@@ -3,12 +3,15 @@ public class Audio
   
   AudioContext ac;
   ArrayList<SamplePlayer> samplers;
+  ArrayList<SoundObject> soundObjects;
   
   
   Audio()
   {
     ac = new AudioContext();
     samplers = new ArrayList<SamplePlayer>();
+    soundObjects = new ArrayList<SoundObject>();
+    
     selectFolder("choose a folder of samples", "getDirectory", sketchFile(""), this);
   }
   
@@ -22,6 +25,7 @@ public class Audio
     else
     {
       loadAllSamples(selection.getAbsolutePath());
+      createSoundObjects();
     }  
   }
     
@@ -33,7 +37,7 @@ public class Audio
     for (int i = 0; i < filenames.length; i++) {
       try 
       {      
-        samplers.add(new SamplePlayer(ac, new Sample(path + "/" + filenames[i])));//SampleManager.sample(filenames[i]));
+        samplers.add(new SamplePlayer(ac, SampleManager.sample(path + "/" + filenames[i])));
       }
       catch (Exception e)
       {
@@ -41,6 +45,33 @@ public class Audio
       }
     }
     println("loaded " + samplers.size() + " samples");
+  }
+  
+  
+  void createSoundObjects()
+  {
+    for (int i = 0; i < samplers.size(); i++) 
+    {
+      soundObjects.add(new SoundObject());
+    }
+  }
+  
+  
+  void updateSoundObjects(int _mouseX, int _mouseY)
+  {
+    for (SoundObject so: soundObjects)
+    {
+      so.calcDistance(_mouseX, _mouseY);
+    }
+  }
+  
+  
+  void displaySoundObjects()
+  {
+    for (SoundObject so: soundObjects)
+    {
+      so.display(); 
+    }
   }
   
 }

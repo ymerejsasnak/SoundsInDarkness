@@ -2,35 +2,42 @@ class MouseLight
 {
   
   int x, y;
-  int radius;
+  int size;
   
   MouseLight() 
   {
-    radius = 60; 
+    size = 150; 
   }
   
-  void setRadius(int value) 
+  void setSize(int value) 
   {
-    radius -= value * RADIUS_SCALING;
-    if (radius < RADIUS_MIN) radius = RADIUS_MIN;
-    else if (radius > RADIUS_MAX) radius = RADIUS_MAX;
+    size -= value * LIGHT_SIZE_INCREMENT;
+    if (size < LIGHT_SIZE_MIN) size = LIGHT_SIZE_MIN;
+    else if (size > LIGHT_SIZE_MAX) size = LIGHT_SIZE_MAX;
   }
   
-  void updatePosition()
+  int getSize()
   {
-    this.x = mouseX;
-    this.y = mouseY;
+    return size; 
+  }
+  
+  void updatePosition(int _mouseX, int _mouseY)
+  {
+    this.x = _mouseX;
+    this.y = _mouseY;
   }
   
   void display()
   {
-    fill(200, 20);
-    ellipse(x, y, radius * 2, radius * 2);
+    fill(100, 20);
+    ellipse(x, y, size, size);
+    ellipse(x, y, size / 3 * 2, size / 3 * 2);
+    ellipse(x, y, size / 3, size / 3);
   }
 }
 
 
 void mouseWheel(MouseEvent event)
 {
-  mouseLight.setRadius(event.getCount());
+  mouseLight.setSize(event.getCount());
 }

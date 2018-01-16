@@ -1,11 +1,28 @@
 /*
   (sound toy)
   searching for sample loops in the dark
+
+
+
+
+
+soundobjects:
+-randomwalk?, looping sound, volume goes up as light gets nearer   (also add filter and reverb to faraway sounds?)
+
+
+
+
+
 */
 
-final int RADIUS_MIN = 20;
-final int RADIUS_MAX = 150;
-final int RADIUS_SCALING = 10;
+
+
+
+final int SOUND_SIZE = 20;
+
+final int LIGHT_SIZE_MIN = 30;
+final int LIGHT_SIZE_MAX = 300;
+final int LIGHT_SIZE_INCREMENT = 10;
 
 
 
@@ -20,6 +37,7 @@ void setup() {
   size(1000, 800); 
   background(0);
   ellipseMode(CENTER);
+  noStroke();
 
   mouseLight = new MouseLight();
   audio = new Audio();
@@ -28,6 +46,10 @@ void setup() {
 
 void draw() {
   background(0); 
-  mouseLight.updatePosition();
+ 
+  mouseLight.updatePosition(mouseX, mouseY);
+  audio.updateSoundObjects(mouseX, mouseY);
+  
+  audio.displaySoundObjects();
   mouseLight.display();
 }
