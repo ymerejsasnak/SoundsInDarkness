@@ -61,6 +61,7 @@ public class Audio
   {
     for (SoundObject so: soundObjects)
     {
+      so.walk();
       so.calcDistance(_mouseX, _mouseY);
     }
   }

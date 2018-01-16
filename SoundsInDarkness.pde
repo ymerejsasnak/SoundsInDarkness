@@ -7,6 +7,10 @@
 
 
 soundobjects:
+change random walk to angular direction
+constrain to screen
+cleanup code
+
 -randomwalk?, looping sound, volume goes up as light gets nearer   (also add filter and reverb to faraway sounds?)
 
 
@@ -52,4 +56,10 @@ void draw() {
   
   audio.displaySoundObjects();
   mouseLight.display();
+  
+  
+  // temp framerate display jic
+  fill(200);
+  textSize(20);
+  text((int)frameRate, 10, 10);
 }
