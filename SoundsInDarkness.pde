@@ -2,19 +2,13 @@
   (sound toy)
   searching for sample loops in the dark
 
-
-
-
-
-soundobjects:
-change random walk to angular direction
-constrain to screen
-cleanup code
-
-(also add filter and reverb to faraway sounds?)
-
-
--add 'latern'?  (click to place a stationary light that slowly dims until gone?)
+ideas:
+alternate play modes: looping vs single trigger when becomes visible
+add reverb to farther/darker sounds?
+left click - turn flashlight on/off
+right click - add/remove a second light that bounces around the screen
+center click? - add single stationary lantern that fades until gone
+x, y values: 1 affects rate, other affects...what?
 
 
 */
