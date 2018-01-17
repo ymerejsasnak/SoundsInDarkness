@@ -93,7 +93,6 @@ public class Audio
       if (soundObjects.get(index).getVisible())
       {
         gains.get(index).setGain(soundObjects.get(index).getGain());
-        println(soundObjects.get(index).getGain());
         samplers.get(index).pause(false); 
       }
       else

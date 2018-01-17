@@ -11,10 +11,10 @@ change random walk to angular direction
 constrain to screen
 cleanup code
 
--randomwalk?, looping sound, volume goes up as light gets nearer   (also add filter and reverb to faraway sounds?)
+(also add filter and reverb to faraway sounds?)
 
 
-
+-add 'latern'?  (click to place a stationary light that slowly dims until gone?)
 
 
 */
@@ -27,6 +27,8 @@ final int SOUND_SIZE = 20;
 final int LIGHT_SIZE_MIN = 60;
 final int LIGHT_SIZE_MAX = 500;
 final int LIGHT_SIZE_INCREMENT = 10;
+
+final float PERLIN_SCALE = .005;
 
 
 

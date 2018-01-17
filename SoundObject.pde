@@ -1,22 +1,20 @@
-enum Direction {
-  NONE, UP, DOWN, LEFT, RIGHT 
-}
-
-
 class SoundObject
 {
   
-  int x, y;
+  float x, y;
   float distance;
-  Direction direction;
+  float angle;
   boolean visible;
+
+  float angleRange;
   
   SoundObject()
   {
-    x = (int) random(0, width - SOUND_SIZE);
-    y = (int) random(0, height - SOUND_SIZE);
-    direction = Direction.values()[(int) random(Direction.values().length)];
+    x = random(SOUND_SIZE, width - SOUND_SIZE);
+    y = random(SOUND_SIZE, height - SOUND_SIZE);
     visible = false;
+    angle = 0;
+    angleRange = random(QUARTER_PI, HALF_PI);
   }
   
   
@@ -35,32 +33,31 @@ class SoundObject
     return map(distance, 0, mouseLight.getSize() / 2, 1.0, 0.0);
   }
   
+  
+  void chooseDirection()
+  {
+    angle += randomGaussian() * angleRange;
+  }
+  
+  
   void walk()
   {
+    chooseDirection();
+    x += cos(angle);
+    y += sin(angle);
+    keepOnScreen();
+  }
+  
+  void keepOnScreen()
+  {
+    //getting stuck
+    if (x < SOUND_SIZE) x = SOUND_SIZE;
+    else if (x > width - SOUND_SIZE) x = width - SOUND_SIZE;
+    else if (y < SOUND_SIZE) y = SOUND_SIZE;
+    else if (y > height - SOUND_SIZE) y = height - SOUND_SIZE;
+    else return;
     
-    float chance = random(100);
-    if (chance > 75) 
-    {
-      direction = Direction.values()[(int) random(Direction.values().length)];
-    }
-    
-    switch(direction)
-    {
-      case RIGHT: 
-        x++;
-        break;
-      case LEFT: 
-        x--;
-        break;
-      case DOWN: 
-        y++;
-        break;
-      case UP: 
-        y--;
-        break;
-      case NONE:
-        break;
-    }
+    angle = -angle;
   }
   
   void display()
