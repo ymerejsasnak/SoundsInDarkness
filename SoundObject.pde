@@ -30,6 +30,11 @@ class SoundObject
     return visible;
   }
   
+  float getGain()
+  {
+    return map(distance, 0, mouseLight.getSize() / 2, 1.0, 0.0);
+  }
+  
   void walk()
   {
     

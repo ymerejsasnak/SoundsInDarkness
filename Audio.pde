@@ -3,6 +3,8 @@ public class Audio
   
   AudioContext ac;
   ArrayList<SamplePlayer> samplers;
+  ArrayList<Gain> gains;
+  //gain glides too?
   ArrayList<SoundObject> soundObjects;
   
   
@@ -10,6 +12,7 @@ public class Audio
   {
     ac = new AudioContext();
     samplers = new ArrayList<SamplePlayer>();
+    gains = new ArrayList<Gain>();
     soundObjects = new ArrayList<SoundObject>();
     ac.start();
     
@@ -41,6 +44,7 @@ public class Audio
       try 
       {      
         samplers.add(new SamplePlayer(ac, SampleManager.sample(path + "/" + filenames[i])));
+        
       }
       catch (Exception e)
       {
@@ -53,11 +57,13 @@ public class Audio
   
   void setupSamplers() 
   {
-    for (SamplePlayer sp: samplers)
+    for (int index = 0; index < samplers.size(); index++)
     {
-      sp.pause(true);
-      sp.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
-      ac.out.addInput(sp);
+      gains.add(new Gain(ac, 2, 1));
+      samplers.get(index).pause(true);
+      samplers.get(index).setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
+      gains.get(index).addInput(samplers.get(index));
+      ac.out.addInput(gains.get(index));
     }
   }
   
@@ -86,6 +92,8 @@ public class Audio
     {
       if (soundObjects.get(index).getVisible())
       {
+        gains.get(index).setGain(soundObjects.get(index).getGain());
+        println(soundObjects.get(index).getGain());
         samplers.get(index).pause(false); 
       }
       else
