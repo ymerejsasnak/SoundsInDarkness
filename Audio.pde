@@ -80,7 +80,7 @@ public class Audio
   {
     for (SoundObject so: soundObjects)
     {
-      so.walk();
+      so.updatePosition();
       so.calcDistance(_mouseX, _mouseY);
     }
   }

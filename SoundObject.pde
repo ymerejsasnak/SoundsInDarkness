@@ -4,9 +4,10 @@ class SoundObject
   float x, y;
   float distance;
   float angle;
+  
   boolean visible;
 
-  float angleRange;
+  color myColor;
   
   SoundObject()
   {
@@ -14,7 +15,7 @@ class SoundObject
     y = random(SOUND_SIZE, height - SOUND_SIZE);
     visible = false;
     angle = 0;
-    angleRange = random(QUARTER_PI, HALF_PI);
+    myColor = color(random(100, 255), random(100, 255), random(100, 255));
   }
   
   
@@ -36,11 +37,11 @@ class SoundObject
   
   void chooseDirection()
   {
-    angle += randomGaussian() * angleRange;
+    angle += randomGaussian() * random(QUARTER_PI / 2, QUARTER_PI);;
   }
   
   
-  void walk()
+  void updatePosition()
   {
     chooseDirection();
     x += cos(angle);
@@ -64,7 +65,8 @@ class SoundObject
   {
     if (visible)
     {
-      fill(map(mouseLight.getSize() / 2 - distance, 0, mouseLight.getSize() / 2, 0, 255));
+      float myAlpha = map(mouseLight.getSize() / 2 - distance, 0, mouseLight.getSize() / 2, 0, 255);
+      fill(myColor, myAlpha);
       ellipse(x, y, SOUND_SIZE, SOUND_SIZE);
     }
   }
