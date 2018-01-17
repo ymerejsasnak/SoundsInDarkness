@@ -29,10 +29,11 @@ class MouseLight
   
   void display()
   {
-    fill(100, 20);
-    ellipse(x, y, size, size);
-    ellipse(x, y, size / 3 * 2, size / 3 * 2);
-    ellipse(x, y, size / 3, size / 3);
+    fill(100, 5);
+    for (int i = 1; i < 11; i ++) 
+    {
+      ellipse(x, y, size * i / 10, size * i / 10);
+    }
   }
 }
 

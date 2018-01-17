@@ -11,6 +11,7 @@ public class Audio
     ac = new AudioContext();
     samplers = new ArrayList<SamplePlayer>();
     soundObjects = new ArrayList<SoundObject>();
+    ac.start();
     
     selectFolder("choose a folder of samples", "getDirectory", sketchFile(""), this);
   }
@@ -25,7 +26,9 @@ public class Audio
     else
     {
       loadAllSamples(selection.getAbsolutePath());
+      setupSamplers();
       createSoundObjects();
+      
     }  
   }
     
@@ -48,6 +51,16 @@ public class Audio
   }
   
   
+  void setupSamplers() 
+  {
+    for (SamplePlayer sp: samplers)
+    {
+      sp.pause(true);
+      sp.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
+      ac.out.addInput(sp);
+    }
+  }
+  
   void createSoundObjects()
   {
     for (int i = 0; i < samplers.size(); i++) 
@@ -63,6 +76,22 @@ public class Audio
     {
       so.walk();
       so.calcDistance(_mouseX, _mouseY);
+    }
+  }
+  
+  
+  void playVisibleSounds()
+  {
+    for (int index = 0; index < soundObjects.size(); index++)
+    {
+      if (soundObjects.get(index).getVisible())
+      {
+        samplers.get(index).pause(false); 
+      }
+      else
+      {
+        samplers.get(index).pause(true); 
+      }
     }
   }
   

@@ -24,8 +24,8 @@ cleanup code
 
 final int SOUND_SIZE = 20;
 
-final int LIGHT_SIZE_MIN = 30;
-final int LIGHT_SIZE_MAX = 300;
+final int LIGHT_SIZE_MIN = 60;
+final int LIGHT_SIZE_MAX = 500;
 final int LIGHT_SIZE_INCREMENT = 10;
 
 
@@ -53,6 +53,8 @@ void draw() {
  
   mouseLight.updatePosition(mouseX, mouseY);
   audio.updateSoundObjects(mouseX, mouseY);
+  
+  audio.playVisibleSounds();
   
   audio.displaySoundObjects();
   mouseLight.display();
