@@ -124,6 +124,7 @@ public class Audio
         gainGlides.get(index).setValue(thisObject.getGain());
         panGlides.get(index).setValue(thisObject.getPan());
         rateGlides.get(index).setValue(thisObject.getRate());
+        println(thisObject.getRate());
         samplers.get(index).pause(false);         
       }
       else

@@ -24,8 +24,8 @@ class MouseLight
   
   void updatePosition(int _mouseX, int _mouseY)
   {
-    this.x = int(_mouseX + randomGaussian() * 2); 
-    this.y = int(_mouseY + randomGaussian() * 2);
+    this.x = int(_mouseX);// + randomGaussian() * 2); 
+    this.y = int(_mouseY);// + randomGaussian() * 2);
   }
   
   void display()

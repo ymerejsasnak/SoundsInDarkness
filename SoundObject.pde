@@ -6,6 +6,7 @@ class SoundObject
   float distance;
   float lastDistance;
   float angle;
+  float speed;
   
   boolean visible;
 
@@ -18,6 +19,7 @@ class SoundObject
     y = random(SOUND_SIZE, height - SOUND_SIZE);
     visible = false;
     angle = 0;
+    speed = random(1, 12);
     myColor = color(random(100, 255), random(100, 255), random(100, 255));
   }
   
@@ -58,11 +60,12 @@ class SoundObject
   {
     if (lastDistance > distance)
     { 
-      return map(distance, 0, LIGHT_SIZE_MAX / 2, 1, 1.4);
+      
+      return map(max(lastDistance - distance, 0), 0, LIGHT_SIZE_MAX / 2, 1, 2);
     }
     else if (lastDistance < distance)
     {
-      return map(distance, 0, LIGHT_SIZE_MAX / 2, 1, 0.7);
+      return map(max(distance - lastDistance, 0), 0, LIGHT_SIZE_MAX / 2, 1, .5);
     }
     else
     {
@@ -72,15 +75,15 @@ class SoundObject
   
   void chooseDirection()
   {
-    angle += randomGaussian() * random(QUARTER_PI / 2, QUARTER_PI);;
+    angle += randomGaussian() * random(QUARTER_PI / 4, QUARTER_PI / 2);;
   }
   
   
   void updatePosition()
   {
     chooseDirection();
-    x += cos(angle);
-    y += sin(angle);
+    x += cos(angle) * speed;
+    y += sin(angle) * speed;
     keepOnScreen();
   }
   
