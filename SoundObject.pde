@@ -34,6 +34,37 @@ class SoundObject
     return map(distance, 0, mouseLight.getSize() / 2, 1.0, 0.0);
   }
   
+  float getPan()
+  {
+    if (x < mouseLight.x)
+    { 
+      return map(distance, 0, LIGHT_SIZE_MAX / 2, 0, -1);
+    }
+    else if (x > mouseLight.x)
+    {
+      return map(distance, 0, LIGHT_SIZE_MAX / 2, 0, 1);
+    }
+    else
+    {
+      return 0; 
+    }
+  }
+  
+  float getRate()
+  {
+    if (y < mouseLight.y)
+    { 
+      return map(distance, 0, LIGHT_SIZE_MAX / 2, 1, 1.2);
+    }
+    else if (y > mouseLight.y)
+    {
+      return map(distance, 0, LIGHT_SIZE_MAX / 2, 1, 0.9);
+    }
+    else
+    {
+      return 1; 
+    }
+  }
   
   void chooseDirection()
   {

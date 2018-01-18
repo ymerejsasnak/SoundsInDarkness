@@ -3,13 +3,10 @@
   searching for sample loops in the dark
 
 ideas:
-alternate play modes: looping vs single trigger when becomes visible
 add reverb to farther/darker sounds?
 left click - turn flashlight on/off
 right click - add/remove a second light that bounces around the screen
 center click? - add single stationary lantern that fades until gone
-x, y values: 1 affects rate, other affects...what?
-
 
 */
 

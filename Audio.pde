@@ -4,16 +4,27 @@ public class Audio
   AudioContext ac;
   ArrayList<SamplePlayer> samplers;
   ArrayList<Gain> gains;
-  //gain glides too?
+  ArrayList<Glide> gainGlides;
+  ArrayList<Panner> pans;
+  ArrayList<Glide> panGlides;
+  ArrayList<Glide> rateGlides;
+  
   ArrayList<SoundObject> soundObjects;
   
   
   Audio()
   {
     ac = new AudioContext();
+    
     samplers = new ArrayList<SamplePlayer>();
     gains = new ArrayList<Gain>();
+    gainGlides = new ArrayList<Glide>();
+    pans = new ArrayList<Panner>();
+    panGlides = new ArrayList<Glide>();
+    rateGlides = new ArrayList<Glide>();
+    
     soundObjects = new ArrayList<SoundObject>();
+    
     ac.start();
     
     selectFolder("choose a folder of samples", "getDirectory", sketchFile(""), this);
@@ -59,11 +70,26 @@ public class Audio
   {
     for (int index = 0; index < samplers.size(); index++)
     {
-      gains.add(new Gain(ac, 2, 1));
-      samplers.get(index).pause(true);
-      samplers.get(index).setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
-      gains.get(index).addInput(samplers.get(index));
-      ac.out.addInput(gains.get(index));
+      
+      SamplePlayer thisSampler = samplers.get(index);
+      thisSampler.pause(true);
+      thisSampler.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
+      thisSampler.setInterpolationType(SamplePlayer.InterpolationType.CUBIC);
+
+      gainGlides.add(new Glide(ac, 0, 25));
+      gains.add(new Gain(ac, 2, gainGlides.get(index)));
+      
+      panGlides.add(new Glide(ac, 0, 25));
+      pans.add(new Panner(ac, panGlides.get(index)));
+      
+      rateGlides.add(new Glide(ac, 1, 25));
+      
+           
+      
+      gains.get(index).addInput(thisSampler);
+      pans.get(index).addInput(gains.get(index));
+      
+      ac.out.addInput(pans.get(index));
     }
   }
   
@@ -90,9 +116,15 @@ public class Audio
   {
     for (int index = 0; index < soundObjects.size(); index++)
     {
-      if (soundObjects.get(index).getVisible())
+      SoundObject thisObject = soundObjects.get(index);
+      samplers.get(index).setRate(rateGlides.get(index));
+        
+      if (thisObject.getVisible())
       {
-        gains.get(index).setGain(soundObjects.get(index).getGain());
+        gainGlides.get(index).setValue(thisObject.getGain());
+        panGlides.get(index).setValue(thisObject.getPan());
+        rateGlides.get(index).setValue(thisObject.getRate());
+        
         samplers.get(index).pause(false); 
       }
       else
@@ -100,6 +132,7 @@ public class Audio
         samplers.get(index).pause(true); 
       }
     }
+    
   }
   
   
