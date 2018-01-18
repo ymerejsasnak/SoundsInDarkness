@@ -3,11 +3,8 @@
   searching for sample loops in the dark
 
 ideas:
-add reverb to farther/darker sounds?
-left click - turn flashlight on/off
-right click - add/remove a second light that bounces around the screen
-center click? - add single stationary lantern that fades until gone
-
+change rate to go up if approaching and down if going away
+adjustments and cleanup
 */
 
 

@@ -97,7 +97,7 @@ public class Audio
   {
     for (int i = 0; i < samplers.size(); i++) 
     {
-      soundObjects.add(new SoundObject());
+      soundObjects.add(new SoundObject(i));
     }
   }
   
@@ -124,14 +124,20 @@ public class Audio
         gainGlides.get(index).setValue(thisObject.getGain());
         panGlides.get(index).setValue(thisObject.getPan());
         rateGlides.get(index).setValue(thisObject.getRate());
-        
         samplers.get(index).pause(false); 
+        
+        if (samplers.get(index).getPosition() - 100 <= 0)
+        {
+          thisObject.setBeatAlpha(); 
+        }
+        
       }
       else
       {
         samplers.get(index).pause(true); 
       }
     }
+    
     
   }
   
@@ -141,6 +147,7 @@ public class Audio
     for (SoundObject so: soundObjects)
     {
       so.display(); 
+      so.updateBeatAlpha();
     }
   }
   

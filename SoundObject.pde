@@ -1,5 +1,6 @@
 class SoundObject
 {
+  int index;
   
   float x, y;
   float distance;
@@ -8,9 +9,11 @@ class SoundObject
   boolean visible;
 
   color myColor;
+  float beatAlpha = .1;
   
-  SoundObject()
+  SoundObject(int index)
   {
+    this.index = index;
     x = random(SOUND_SIZE, width - SOUND_SIZE);
     y = random(SOUND_SIZE, height - SOUND_SIZE);
     visible = false;
@@ -26,7 +29,7 @@ class SoundObject
   
   boolean getVisible()
   {
-    return visible;
+    return visible;  
   }
   
   float getGain()
@@ -92,11 +95,28 @@ class SoundObject
     angle = -angle;
   }
   
+  
+  void setBeatAlpha()
+  {
+    beatAlpha = 1; 
+    println("triggered" + index);
+  }
+  
+  
+  void updateBeatAlpha()
+  {
+    if (beatAlpha > .1) 
+    {
+      beatAlpha -= .1; 
+    }
+  }
+  
+  
   void display()
   {
     if (visible)
     {
-      float myAlpha = map(mouseLight.getSize() / 2 - distance, 0, mouseLight.getSize() / 2, 0, 255);
+      float myAlpha = map(mouseLight.getSize() / 2 - distance, 0, mouseLight.getSize() / 2, 0, 255) * beatAlpha;
       fill(myColor, myAlpha);
       ellipse(x, y, SOUND_SIZE, SOUND_SIZE);
     }
