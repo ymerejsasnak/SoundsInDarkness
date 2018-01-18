@@ -3,7 +3,9 @@
   searching for sample loops in the dark
 
 ideas:
-change rate to go up if approaching and down if going away
+rate should also be affected by speed (ie SIZE of difference between dist and lastdist)
+way to unload all, load new
+options for repeat files, # of files, etc
 adjustments and cleanup
 */
 

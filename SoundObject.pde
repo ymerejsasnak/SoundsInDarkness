@@ -4,12 +4,12 @@ class SoundObject
   
   float x, y;
   float distance;
+  float lastDistance;
   float angle;
   
   boolean visible;
 
   color myColor;
-  float beatAlpha = .1;
   
   SoundObject(int index)
   {
@@ -23,6 +23,7 @@ class SoundObject
   
   
   void calcDistance(int _mouseX, int _mouseY) {
+    lastDistance = distance;
     distance = dist(_mouseX, _mouseY, x, y);    
     visible = distance < mouseLight.getSize() / 2;
   }
@@ -55,13 +56,13 @@ class SoundObject
   
   float getRate()
   {
-    if (y < mouseLight.y)
+    if (lastDistance > distance)
     { 
-      return map(distance, 0, LIGHT_SIZE_MAX / 2, 1, 1.2);
+      return map(distance, 0, LIGHT_SIZE_MAX / 2, 1, 1.4);
     }
-    else if (y > mouseLight.y)
+    else if (lastDistance < distance)
     {
-      return map(distance, 0, LIGHT_SIZE_MAX / 2, 1, 0.9);
+      return map(distance, 0, LIGHT_SIZE_MAX / 2, 1, 0.7);
     }
     else
     {
@@ -92,23 +93,7 @@ class SoundObject
     else if (y > height - SOUND_SIZE) y = height - SOUND_SIZE;
     else return;
     
-    angle = -angle;
-  }
-  
-  
-  void setBeatAlpha()
-  {
-    beatAlpha = 1; 
-    println("triggered" + index);
-  }
-  
-  
-  void updateBeatAlpha()
-  {
-    if (beatAlpha > .1) 
-    {
-      beatAlpha -= .1; 
-    }
+    angle = angle + PI;
   }
   
   
@@ -116,7 +101,7 @@ class SoundObject
   {
     if (visible)
     {
-      float myAlpha = map(mouseLight.getSize() / 2 - distance, 0, mouseLight.getSize() / 2, 0, 255) * beatAlpha;
+      float myAlpha = map(mouseLight.getSize() / 2 - distance, 0, mouseLight.getSize() / 2, 0, 255);
       fill(myColor, myAlpha);
       ellipse(x, y, SOUND_SIZE, SOUND_SIZE);
     }

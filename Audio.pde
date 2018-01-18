@@ -124,13 +124,7 @@ public class Audio
         gainGlides.get(index).setValue(thisObject.getGain());
         panGlides.get(index).setValue(thisObject.getPan());
         rateGlides.get(index).setValue(thisObject.getRate());
-        samplers.get(index).pause(false); 
-        
-        if (samplers.get(index).getPosition() - 100 <= 0)
-        {
-          thisObject.setBeatAlpha(); 
-        }
-        
+        samplers.get(index).pause(false);         
       }
       else
       {
@@ -147,7 +141,6 @@ public class Audio
     for (SoundObject so: soundObjects)
     {
       so.display(); 
-      so.updateBeatAlpha();
     }
   }
   
