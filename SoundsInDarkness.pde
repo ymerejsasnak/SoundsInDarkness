@@ -3,8 +3,13 @@
   searching for sample loops in the dark
 
 ideas:
-way to unload all, load new
-options for repeat files, # of files, etc
+
+right mouse button: object do not move, pressed again, move again (but maybe reroll their speed/angle stuff)
+
+way to limit # of files loaded (randomly from chosen dir) so as to avoid mem errors
+
+other options for repeat files, # of files, etc
+
 adjustments and cleanup
 */
 

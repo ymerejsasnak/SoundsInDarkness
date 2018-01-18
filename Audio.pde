@@ -102,6 +102,22 @@ public class Audio
   }
   
   
+  void clearAndLoadNew()
+  {
+    //ac.out.pause(true);
+    samplers.clear();
+    gains.clear();
+    gainGlides.clear();
+    pans.clear();
+    panGlides.clear();
+    rateGlides.clear();
+    
+    soundObjects.clear();
+    
+    selectFolder("choose a folder of samples", "getDirectory", sketchFile(""), this);
+  }
+  
+  
   void updateSoundObjects(int _mouseX, int _mouseY)
   {
     for (SoundObject so: soundObjects)
