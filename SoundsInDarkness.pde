@@ -2,13 +2,11 @@
   (sound toy)
   searching for sample loops in the dark
 
-ideas:
-
-right mouse button: object do not move, pressed again, move again (but maybe reroll their speed/angle stuff)
 
 way to limit # of files loaded (randomly from chosen dir) so as to avoid mem errors
-
 other options for repeat files, # of files, etc
+
+add realtime recording
 
 adjustments and cleanup
 */
@@ -22,7 +20,6 @@ final int LIGHT_SIZE_MIN = 60;
 final int LIGHT_SIZE_MAX = 500;
 final int LIGHT_SIZE_INCREMENT = 10;
 
-final float PERLIN_SCALE = .005;
 
 
 

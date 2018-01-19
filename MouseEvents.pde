@@ -5,6 +5,10 @@ void mousePressed()
   {
     audio.clearAndLoadNew();
   }
+  else if (mouseButton == RIGHT)
+  {
+    audio.toggleMovement(); 
+  }
 }
 
 

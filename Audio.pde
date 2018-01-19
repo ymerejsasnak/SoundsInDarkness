@@ -11,6 +11,8 @@ public class Audio
   
   ArrayList<SoundObject> soundObjects;
   
+  boolean soundsMoving;
+  
   
   Audio()
   {
@@ -24,6 +26,7 @@ public class Audio
     rateGlides = new ArrayList<Glide>();
     
     soundObjects = new ArrayList<SoundObject>();
+    soundsMoving = true;
     
     ac.start();
     
@@ -105,6 +108,11 @@ public class Audio
   void clearAndLoadNew()
   {
     //ac.out.pause(true);
+    for (SamplePlayer sp: samplers)
+    {
+      sp.kill(); 
+    }
+    
     samplers.clear();
     gains.clear();
     gainGlides.clear();
@@ -118,12 +126,23 @@ public class Audio
   }
   
   
+  void toggleMovement()
+  {
+    soundsMoving = !soundsMoving;
+
+  }
+  
+  
   void updateSoundObjects(int _mouseX, int _mouseY)
   {
     for (SoundObject so: soundObjects)
     {
-      so.updatePosition();
+      if (soundsMoving)
+      {
+        so.updatePosition();
+      }
       so.calcDistance(_mouseX, _mouseY);
+      
     }
   }
   

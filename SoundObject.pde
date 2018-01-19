@@ -19,7 +19,7 @@ class SoundObject
     y = random(SOUND_SIZE, height - SOUND_SIZE);
     visible = false;
     angle = 0;
-    speed = random(1, 12);
+    speed = random(2, 10);
     myColor = color(random(100, 255), random(100, 255), random(100, 255));
   }
   
@@ -61,11 +61,11 @@ class SoundObject
     if (lastDistance > distance)
     { 
       
-      return map(max(lastDistance - distance, 0), 0, LIGHT_SIZE_MAX / 2, 1, 2);
+      return map(max(lastDistance - distance, 0), 0, LIGHT_SIZE_MAX / 2, 1, 4);
     }
     else if (lastDistance < distance)
     {
-      return map(max(distance - lastDistance, 0), 0, LIGHT_SIZE_MAX / 2, 1, .5);
+      return map(max(distance - lastDistance, 0), 0, LIGHT_SIZE_MAX / 2, 1, .25);
     }
     else
     {
