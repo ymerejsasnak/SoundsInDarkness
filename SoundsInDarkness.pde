@@ -2,9 +2,13 @@
   (sound toy)
   searching for sample loops in the dark
 
+-some glitchiness when loading (actually reloading) lots of samples?
 
-way to limit # of files loaded (randomly from chosen dir) so as to avoid mem errors
-other options for repeat files, # of files, etc
+-issues with loading too many big samples (out of memory)
+
+?way to limit # of files loaded (randomly from chosen dir) so as to avoid mem errors
+
+?other options for repeat files, # of files, etc
 
 add realtime recording
 
@@ -30,7 +34,8 @@ import java.io.File;
 MouseLight mouseLight;
 Audio audio;
 
-void setup() {
+void setup()
+{
   size(1000, 800); 
   background(0);
   ellipseMode(CENTER);
@@ -41,7 +46,8 @@ void setup() {
 }
 
 
-void draw() {
+void draw() 
+{
   background(0); 
  
   mouseLight.updatePosition(mouseX, mouseY);
