@@ -90,10 +90,10 @@ class SoundObject
   void keepOnScreen()
   {
     //getting stuck
-    if (x < SOUND_SIZE) x = SOUND_SIZE;
-    else if (x > width - SOUND_SIZE) x = width - SOUND_SIZE;
-    else if (y < SOUND_SIZE) y = SOUND_SIZE;
-    else if (y > height - SOUND_SIZE) y = height - SOUND_SIZE;
+    if (x < SOUND_SIZE / 2) x = SOUND_SIZE / 2;
+    else if (x > width - SOUND_SIZE / 2) x = width - SOUND_SIZE / 2;
+    else if (y < SOUND_SIZE / 2) y = SOUND_SIZE / 2;
+    else if (y > height - SOUND_SIZE / 2) y = height - SOUND_SIZE / 2;
     else return;
     
     angle = angle + PI;
