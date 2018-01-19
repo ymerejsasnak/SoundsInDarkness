@@ -52,9 +52,5 @@ void draw() {
   audio.displaySoundObjects();
   mouseLight.display();
   
-  
-  // temp framerate display jic
-  fill(200);
-  textSize(20);
-  text((int)frameRate, 10, 10);
+ 
 }

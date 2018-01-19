@@ -13,6 +13,8 @@ public class Audio
   
   boolean soundsMoving;
   
+  String lastChosenDirectory;
+  
   
   Audio()
   {
@@ -42,6 +44,7 @@ public class Audio
     } 
     else
     {
+      lastChosenDirectory = selection.getAbsolutePath();
       loadAllSamples(selection.getAbsolutePath());
       setupSamplers();
       createSoundObjects();
@@ -54,18 +57,21 @@ public class Audio
   {
     java.io.File folder = new java.io.File(path);
     String[] filenames = folder.list();
+    int sampleCounter = 0;
     for (int i = 0; i < filenames.length; i++) {
       try 
       {      
-        samplers.add(new SamplePlayer(ac, SampleManager.sample(path + "/" + filenames[i])));
-        
+        samplers.add(new SamplePlayer(ac, SampleManager.sample("sample" + sampleCounter, path + "/" + filenames[i])));
+        sampleCounter++;
       }
       catch (Exception e)
       {
         println(filenames[i] + " is not a valid audio file");
       }
+
     }
     println("loaded " + samplers.size() + " samples");
+
   }
   
   
@@ -113,6 +119,12 @@ public class Audio
       sp.kill(); 
     }
     
+    for (String sampleName: SampleManager.getSampleNameList())
+    {
+      SampleManager.removeSample(sampleName); 
+    }
+    
+    
     samplers.clear();
     gains.clear();
     gainGlides.clear();
@@ -121,8 +133,9 @@ public class Audio
     rateGlides.clear();
     
     soundObjects.clear();
+
     
-    selectFolder("choose a folder of samples", "getDirectory", sketchFile(""), this);
+    selectFolder("choose a folder of samples", "getDirectory", sketchFile(lastChosenDirectory), this);
   }
   
   
@@ -159,7 +172,6 @@ public class Audio
         gainGlides.get(index).setValue(thisObject.getGain());
         panGlides.get(index).setValue(thisObject.getPan());
         rateGlides.get(index).setValue(thisObject.getRate());
-        println(thisObject.getRate());
         samplers.get(index).pause(false);         
       }
       else
