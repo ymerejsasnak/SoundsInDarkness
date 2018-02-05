@@ -11,7 +11,7 @@ class MouseLight
   
   void setSize(int value) 
   {
-    size -= value * LIGHT_SIZE_INCREMENT;
+    size -= value * size/10;
     if (size < LIGHT_SIZE_MIN) size = LIGHT_SIZE_MIN;
     else if (size > LIGHT_SIZE_MAX) size = LIGHT_SIZE_MAX;
   }

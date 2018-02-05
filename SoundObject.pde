@@ -61,11 +61,11 @@ class SoundObject
     if (lastDistance > distance)
     { 
       
-      return map(max(lastDistance - distance, 0), 0, LIGHT_SIZE_MAX / 2, 1, 4);
+      return map(lastDistance - distance, 0, LIGHT_SIZE_MAX / 2, 1, 10);
     }
     else if (lastDistance < distance)
     {
-      return map(max(distance - lastDistance, 0), 0, LIGHT_SIZE_MAX / 2, 1, .25);
+      return map(distance - lastDistance, LIGHT_SIZE_MAX / 2, 0, .1, 1);
     }
     else
     {
@@ -81,7 +81,7 @@ class SoundObject
   
   void updatePosition()
   {
-    chooseDirection();
+    if (random(100) > 50)     chooseDirection();
     x += cos(angle) * speed;
     y += sin(angle) * speed;
     keepOnScreen();
@@ -89,7 +89,7 @@ class SoundObject
   
   void keepOnScreen()
   {
-    //getting stuck
+    
     if (x < SOUND_SIZE / 2) x = SOUND_SIZE / 2;
     else if (x > width - SOUND_SIZE / 2) x = width - SOUND_SIZE / 2;
     else if (y < SOUND_SIZE / 2) y = SOUND_SIZE / 2;

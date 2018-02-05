@@ -12,6 +12,7 @@ public class Audio
   ArrayList<SoundObject> soundObjects;
   
   boolean soundsMoving;
+  boolean doneLoading;
   
   String lastChosenDirectory;
   
@@ -29,10 +30,10 @@ public class Audio
     
     soundObjects = new ArrayList<SoundObject>();
     soundsMoving = true;
-    
-    ac.start();
-    
+        
+    doneLoading = false;
     selectFolder("choose a folder of samples", "getDirectory", sketchFile(""), this);
+    ac.start();
   }
   
   
@@ -47,7 +48,8 @@ public class Audio
       lastChosenDirectory = selection.getAbsolutePath();
       loadAllSamples(selection.getAbsolutePath());
       setupSamplers();
-      createSoundObjects();
+      createSoundObjects(); //<>//
+      doneLoading = true;
       
     }  
   }
@@ -57,20 +59,29 @@ public class Audio
   {
     java.io.File folder = new java.io.File(path);
     String[] filenames = folder.list();
-    int sampleCounter = 0;
-    for (int i = 0; i < filenames.length; i++) {
+    int fileIndex = 0;
+    int totalFileSize = 0;
+    while (totalFileSize < MAX_MEMORY && fileIndex < filenames.length) {
       try 
       {      
-        samplers.add(new SamplePlayer(ac, SampleManager.sample("sample" + sampleCounter, path + "/" + filenames[i])));
-        sampleCounter++;
+        samplers.add(new SamplePlayer(ac, new Sample(path + "/" + filenames[fileIndex])));
+        totalFileSize += new File(path + "/" + filenames[fileIndex]).length();
+       
       }
       catch (Exception e)
       {
-        println(filenames[i] + " is not a valid audio file");
+        println(filenames[fileIndex] + " is not a valid audio file");
+      
       }
-
+      finally {
+        fileIndex += 1; 
+      }
+      
+      
+      
     }
     println("loaded " + samplers.size() + " samples");
+    println("with a total of " + totalFileSize + " bytes");
 
   }
   
@@ -99,7 +110,9 @@ public class Audio
       pans.get(index).addInput(gains.get(index));
       
       ac.out.addInput(pans.get(index));
+      ac.out.start();
     }
+    
   }
   
   void createSoundObjects()
@@ -113,17 +126,14 @@ public class Audio
   
   void clearAndLoadNew()
   {
-    //ac.out.pause(true);
+    ac.out.pause(true);
     for (SamplePlayer sp: samplers)
     {
       sp.kill(); 
     }
     
-    for (String sampleName: SampleManager.getSampleNameList())
-    {
-      SampleManager.removeSample(sampleName); 
-    }
-    
+      
+    doneLoading = false;
     
     samplers.clear();
     gains.clear();
@@ -148,47 +158,56 @@ public class Audio
   
   void updateSoundObjects(int _mouseX, int _mouseY)
   {
-    for (SoundObject so: soundObjects)
+    if (doneLoading)
     {
-      if (soundsMoving)
+      for (SoundObject so: soundObjects)
       {
-        so.updatePosition();
+        if (soundsMoving)
+        {
+          so.updatePosition();
+        }
+        so.calcDistance(_mouseX, _mouseY);
+        
       }
-      so.calcDistance(_mouseX, _mouseY);
-      
     }
   }
   
   
   void playVisibleSounds()
   {
-    for (int index = 0; index < soundObjects.size(); index++)
+    if (doneLoading)
     {
-      SoundObject thisObject = soundObjects.get(index);
-      samplers.get(index).setRate(rateGlides.get(index));
-        
-      if (thisObject.getVisible())
+      for (int index = 0; index < soundObjects.size(); index++)
       {
-        gainGlides.get(index).setValue(thisObject.getGain());
-        panGlides.get(index).setValue(thisObject.getPan());
-        rateGlides.get(index).setValue(thisObject.getRate());
-        samplers.get(index).pause(false);         
+        SoundObject thisObject = soundObjects.get(index);
+        samplers.get(index).setRate(rateGlides.get(index));
+          
+        if (thisObject.getVisible())
+        {
+          gainGlides.get(index).setValue(thisObject.getGain());
+          panGlides.get(index).setValue(thisObject.getPan());
+          rateGlides.get(index).setValue(thisObject.getRate());
+          samplers.get(index).pause(false);         
+        }
+        else
+        {
+          samplers.get(index).pause(true); 
+        }
       }
-      else
-      {
-        samplers.get(index).pause(true); 
-      }
+      
     }
-    
     
   }
   
   
   void displaySoundObjects()
   {
-    for (SoundObject so: soundObjects)
+    if (doneLoading)
     {
-      so.display(); 
+      for (SoundObject so: soundObjects)
+      {
+        so.display(); 
+      }
     }
   }
   

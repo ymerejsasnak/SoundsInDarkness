@@ -2,13 +2,11 @@
   (sound toy)
   searching for sample loops in the dark
 
--some glitchiness when loading (actually reloading) lots of samples?
+-some glitchiness when loading (actually reloading) lots of samples? (gc issue? can't do anything about it??)
 
--issues with loading too many big samples (out of memory)
+max memory not quite right (can go over amount by up to 1 file's size)
 
-?way to limit # of files loaded (randomly from chosen dir) so as to avoid mem errors
-
-?other options for repeat files, # of files, etc
+doppler effect not quite right when going away? (ie rate down)
 
 add realtime recording
 
@@ -16,14 +14,13 @@ adjustments and cleanup
 */
 
 
-
+final int MAX_MEMORY = 50000000; //50 mb roughly
 
 final int SOUND_SIZE = 20;
 
-final int LIGHT_SIZE_MIN = 60;
-final int LIGHT_SIZE_MAX = 500;
+final int LIGHT_SIZE_MIN = 50;
+final int LIGHT_SIZE_MAX = 700;
 final int LIGHT_SIZE_INCREMENT = 10;
-
 
 
 
@@ -58,5 +55,6 @@ void draw()
   audio.displaySoundObjects();
   mouseLight.display();
   
+ // println(Runtime.getRuntime().totalMemory());
  
 }
